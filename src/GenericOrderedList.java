@@ -13,18 +13,26 @@ This class implements a singly linked list.
  * 
  * @author Octavio Avila-Cardet
  */
-public class GenericOrderedList <E>
+public class GenericOrderedList <E extends Comparable<E>>
 {
-    
+    private Node head; // pointer to first Node on the list
+    private Node iterator; // used to iterate through the list
+    private boolean isAscending; //stores whether or not the list is in ascending order
     
     /**
      * Creates an instance of the generic ordered list
      * 
      * @param x the information to be contained inside the node
      */
-    public GenericOrderedList(E x)
+    public GenericOrderedList()
     {
-        Node list = new Node(x);
+        head = null;  
+        isAscending = true;
+        Node preHead = new Node (null);
+        preHead.next=head;
+        iterator = preHead;
+        
+        
     }
     
     /**
@@ -34,8 +42,24 @@ public class GenericOrderedList <E>
      */
     public void insert(E x)
     {
+        Node n = new Node (x);
         
+        if (isEmpty())
+        {
+            head = n;
+        }
+        
+        else if (this.isAscending)
+        {
+            insertAscending(n);
+        }
+        
+        else
+        {
+            insertDescending(n);
+        }
     }
+    
     
     /**
      * Searches the list for a node containing its parameter
@@ -59,6 +83,8 @@ public class GenericOrderedList <E>
     {
         boolean listIsEmpty = false;
         
+        listIsEmpty = head == null;
+        
         return listIsEmpty;
     }
     
@@ -67,7 +93,7 @@ public class GenericOrderedList <E>
      */
     public void clear()
     {
-        
+        head = null;
     }
     
     /**
@@ -75,8 +101,66 @@ public class GenericOrderedList <E>
      */
     public void reverse()
     {
+        if (isAscending)
+        {
+            isAscending = false;
+        }
+        else
+        {
+            isAscending = true;
+        }
+            
+    }
+    
+    private void insertAscending(Node n)
+    {
+       
+        
+           while (iterator!=null)
+           {
+               if ( (iterator.next.info.compareTo(n.info)) == 1 || (iterator.next.info.compareTo(n.info)) == 0 )
+               {
+                   iterator.next=n;
+                   n.next=iterator.next.next;
+               }
+               else
+               {
+                   iterator = iterator.next;
+               }
+    
+           }
+        
+       
+         
+    }
+    
+    private void insertDescending(Node n)
+    {
         
     }
+    
+    /**
+     * Returns the last node in the list
+     * 
+     * @return null if list is empty, otherwise, returns the last node in the list
+     */
+    private Node lastNode()
+    {
+        if (head == null)       
+        {
+            return null;       
+        } 
+        else                   
+        {
+            Node temp = head;          
+            while (temp.next != null)   
+            {
+                temp = temp.next;	
+            }
+            return temp;		
+        }
+    }
+    
     
     /**
      * Displays the generic ordered list in textually
@@ -86,6 +170,16 @@ public class GenericOrderedList <E>
     public String toString()
     {
         String finalString="";
+        finalString += head.info;
+        Node n = head.next;
+        
+        while (n!=null)
+        {
+          
+                finalString += "->" + n.info ;
+            
+            
+        }
         return finalString;
     }
     
