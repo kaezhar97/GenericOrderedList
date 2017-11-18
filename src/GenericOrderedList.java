@@ -28,10 +28,6 @@ public class GenericOrderedList <E extends Comparable<E>>
     {
         head = null;  
         isAscending = true;
-        Node preHead = new Node (null);
-        preHead.next=head;
-        iterator = preHead;
-        
         
     }
     
@@ -71,6 +67,37 @@ public class GenericOrderedList <E extends Comparable<E>>
     {
         boolean found = false;
         
+        
+        Node finderAhead = head.next;
+        Node finderBehind = head;
+        Node temp;
+        
+        if (finderBehind.info == x)
+        {  
+                head = finderAhead;
+                finderBehind.next=null;
+                found=true;
+        }
+        
+        while (finderAhead!=null && !found)
+        {
+            if (finderAhead.info==x)
+            {
+                temp = finderAhead.next;
+                finderAhead.next = null;
+                finderBehind.next = temp;
+                found=true;
+            }
+            else
+            {
+                finderAhead = finderAhead.next;
+                finderBehind = finderBehind.next;
+            }
+        }
+        
+        
+        
+        
         return found;
     }
     
@@ -101,6 +128,19 @@ public class GenericOrderedList <E extends Comparable<E>>
      */
     public void reverse()
     {
+        
+        Node mover = head.next;
+        Node last = lastNode();
+        Node temp;
+        
+        while (mover!=last)
+        {
+            temp = mover.next;
+            head = temp;
+            mover.next = head;
+        }
+       
+        
         if (isAscending)
         {
             isAscending = false;
@@ -114,24 +154,49 @@ public class GenericOrderedList <E extends Comparable<E>>
     
     private void insertAscending(Node n)
     {
+       Node ahead = head.next;
+       Node behind = head;
+       Node temp;
+       boolean inserted = false;
        
-        
-           while (iterator!=null)
+       
+       while (ahead!=null && !inserted)
+       {
+           if ((n.info.compareTo(ahead.info)==-1) || (n.info.compareTo(ahead.info)==0))
            {
-               if ( (iterator.next.info.compareTo(n.info)) == 1 || (iterator.next.info.compareTo(n.info)) == 0 )
-               {
-                   iterator.next=n;
-                   n.next=iterator.next.next;
-               }
-               else
-               {
-                   iterator = iterator.next;
-               }
-    
+               temp = behind.next;
+               behind.next = n;
+               n.next = temp;
+               inserted = true;
+               System.out.println("Ahead is NOT null, number inserted in list");
            }
-        
+           else
+           {
+               ahead = ahead.next;
+               behind = behind.next; 
+               System.out.println("Ahead is NOT null, moving on to next set of values");
+           }
+       }
        
-         
+        if (ahead == null)
+       {
+           if ((n.info.compareTo(behind.info)==-1) || (n.info.compareTo(behind.info)==0))
+           {
+               head = n;
+               n.next = behind;
+               inserted = true;
+               System.out.println("Ahead is null, number inserted before before behind");
+           }
+           else
+           {
+               behind.next = n;
+               n.next = null;
+               inserted = true;
+               System.out.println("Ahead is null, number inserted at the end of list");
+           }
+       }
+       
+      
     }
     
     private void insertDescending(Node n)
@@ -170,16 +235,21 @@ public class GenericOrderedList <E extends Comparable<E>>
     public String toString()
     {
         String finalString="";
-        finalString += head.info;
-        Node n = head.next;
         
-        while (n!=null)
+        Node temp = head;
+        
+        while (temp.next!=null)
         {
-          
-                finalString += "->" + n.info ;
-            
-            
+            finalString+=temp.info + "->";
+            temp = temp.next;
+           
         }
+        
+        if (temp.next==null)
+        {
+            finalString += temp.info;
+        }
+        
         return finalString;
     }
     

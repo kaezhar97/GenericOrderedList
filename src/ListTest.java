@@ -38,9 +38,15 @@ public class ListTest
             {
                 if (instruction.equals("DELETE"))
                 {
+                    boolean numberFound=false;
                     info = fileScan.nextInt();
-                    list.delete(info);
+                    numberFound=list.delete(info);
                     operationDone="DELETE "+info;
+                    if (!numberFound)
+                    {
+                        operationDone+=". Could not delete (object not found)";
+                    }
+                    
                 }
             
                 else if (instruction.equals("REVERSE"))
@@ -61,7 +67,14 @@ public class ListTest
                 System.out.println("Operation cannot be done because the list is empty");
             }
           
-            System.out.println("Instruction executed: "+operationDone+"\n"+"List status: "+list.toString());     
+            if (list.isEmpty())
+            {
+               System.out.println("Instruction executed: "+operationDone+"\n"+"List status: empty");  
+            }
+            else
+            {
+                System.out.println("Instruction executed: "+operationDone+"\n"+"List status: "+list.toString());     
+            }
         }
          
     }
