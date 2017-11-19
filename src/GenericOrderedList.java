@@ -129,15 +129,15 @@ public class GenericOrderedList <E extends Comparable<E>>
     public void reverse()
     {
         
-        Node mover = head.next;
-        Node last = lastNode();
-        Node temp;
+        Node first = head;
+        Node removed;
         
-        while (mover!=last)
+        while (first.next!=null)
         {
-            temp = mover.next;
-            head = temp;
-            mover.next = head;
+           removed = first.next;
+           delete(first.next.info);
+           removed.next=head;
+           head=removed;
         }
        
         
