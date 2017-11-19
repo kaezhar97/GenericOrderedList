@@ -64,16 +64,16 @@ public class ListTest
             
             else
             {
-                System.out.println("Operation cannot be done because the list is empty");
+                operationDone+="Operation cannot be done because the list is empty";
             }
           
             if (list.isEmpty())
             {
-               System.out.println("Instruction executed: "+operationDone+"\n"+"List status: empty");  
+               System.out.println("Instruction executed: "+operationDone+ "\nList status: empty\n");  
             }
             else
             {
-                System.out.println("Instruction executed: "+operationDone+"\n"+"List status: "+list.toString());     
+                System.out.println("Instruction executed: "+operationDone+"\n"+"List status: "+list.toString()+"\n");     
             }
         }
          

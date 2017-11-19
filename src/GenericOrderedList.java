@@ -138,6 +138,7 @@ public class GenericOrderedList <E extends Comparable<E>>
            delete(first.next.info);
            removed.next=head;
            head=removed;
+            
         }
        
         
@@ -149,7 +150,8 @@ public class GenericOrderedList <E extends Comparable<E>>
         {
             isAscending = true;
         }
-            
+          
+        
     }
     
     private void insertAscending(Node n)
@@ -168,13 +170,13 @@ public class GenericOrderedList <E extends Comparable<E>>
                behind.next = n;
                n.next = temp;
                inserted = true;
-               System.out.println("Ahead is NOT null, number inserted in list");
+             
            }
            else
            {
                ahead = ahead.next;
                behind = behind.next; 
-               System.out.println("Ahead is NOT null, moving on to next set of values");
+               
            }
        }
        
@@ -185,14 +187,14 @@ public class GenericOrderedList <E extends Comparable<E>>
                head = n;
                n.next = behind;
                inserted = true;
-               System.out.println("Ahead is null, number inserted before before behind");
+               
            }
            else
            {
                behind.next = n;
                n.next = null;
                inserted = true;
-               System.out.println("Ahead is null, number inserted at the end of list");
+               
            }
        }
        
@@ -201,7 +203,46 @@ public class GenericOrderedList <E extends Comparable<E>>
     
     private void insertDescending(Node n)
     {
+        Node preHead = new Node (null);
+        Node trailing = preHead;
+        trailing.next = head;
+        Node mover = head;
+        boolean inserted = false;
         
+        
+        if ((trailing.info==null) && (n.info.compareTo(mover.info)==1))
+        {
+            head = n;
+            n.next = mover;
+            inserted = true;
+        }
+        
+        trailing = trailing.next;
+        mover = mover.next;
+        
+        
+        
+        while(mover!=null&& !inserted)
+        {
+            if ((n.info.compareTo(mover.info)==1) || (n.info.compareTo(mover.info)==0))
+            {
+                trailing.next = n;
+                n.next = mover;
+                inserted = true;
+            }
+            else
+            {
+                trailing = trailing.next;
+                mover = mover.next;
+            }
+        }
+        
+        if (mover == null)
+        {
+            trailing.next = n;
+            n.next = null;
+            inserted = true;
+        }
     }
     
     /**
@@ -238,11 +279,11 @@ public class GenericOrderedList <E extends Comparable<E>>
         
         Node temp = head;
         
+         
         while (temp.next!=null)
         {
             finalString+=temp.info + "->";
             temp = temp.next;
-           
         }
         
         if (temp.next==null)
