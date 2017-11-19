@@ -154,6 +154,11 @@ public class GenericOrderedList <E extends Comparable<E>>
         
     }
     
+    /**
+     * Inserts an object into a list in ascending order
+     * 
+     * @param n the object to be inserted
+     */
     private void insertAscending(Node n)
     {
        Node ahead = head.next;
@@ -201,6 +206,11 @@ public class GenericOrderedList <E extends Comparable<E>>
       
     }
     
+    /**
+     * Inserts an object into a list in descending order
+     * 
+     * @param n the object to be inserted
+     */
     private void insertDescending(Node n)
     {
         Node preHead = new Node (null);
@@ -295,7 +305,7 @@ public class GenericOrderedList <E extends Comparable<E>>
     }
     
     /**
-     * A class to simulate a node on a list
+     * A class to simulate a node on a list. A node contains information and can point to another node
      */
     class Node
     {
